@@ -304,8 +304,8 @@ public class loginController {
 
     public void smessage(String phoneNumber, String templateParam, String templateCode) throws Exception {
         StaticCredentialProvider provider = StaticCredentialProvider.create(Credential.builder()
-                .accessKeyId(System.getenv("ALIBABA_CLOUD_ACCESS_KEY_ID"))
-                .accessKeySecret(System.getenv("ALIBABA_CLOUD_ACCESS_KEY_SECRET"))
+                .accessKeyId("your_id")
+                .accessKeySecret("your_key")
                 .build());
 
         AsyncClient client = AsyncClient.builder()
