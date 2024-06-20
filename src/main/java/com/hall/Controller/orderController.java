@@ -47,8 +47,8 @@ public class orderController {
     @Resource
     UserService userService;
 
-    private String privateKey = "";
-    private String publicKey = "";
+    private String privateKey = System.getenv("your_privateKey");;
+    private String publicKey = System.getenv("your_publicKey");
 
     @GetMapping("/getOrder")
     public ResponeseEntity getOrder(@RequestParam int hid,
