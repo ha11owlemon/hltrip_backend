@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hall.DAO.OrdersMapper">
+  <resultMap id="BaseResultMap" type="com.hall.Bean.Orders">
+    <id column="orderid" jdbcType="INTEGER" property="orderid" />
+    <result column="guestInfo" jdbcType="CHAR" property="guestinfo" />
+    <result column="orderTime" jdbcType="TIMESTAMP" property="ordertime" />
+    <result column="endTime" jdbcType="TIMESTAMP" property="endtime" />
+    <result column="ostatus" jdbcType="VARCHAR" property="ostatus" />
+    <result column="totalprice" jdbcType="DECIMAL" property="totalprice" />
+    <result column="hid" jdbcType="INTEGER" property="hid" />
+    <result column="pamount" jdbcType="DECIMAL" property="pamount" />
+    <result column="ptime" jdbcType="TIMESTAMP" property="ptime" />
+    <result column="pstatus" jdbcType="VARCHAR" property="pstatus" />
+    <result column="ptransactionId" jdbcType="VARCHAR" property="ptransactionid" />
+    <result column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="lid" jdbcType="INTEGER" property="lid" />
+    <result column="orderNumber" jdbcType="VARCHAR" property="ordernumber" />
+    <result column="orderGenTime" jdbcType="TIMESTAMP" property="ordergentime" />
+    <result column="orderCompleteTime" jdbcType="TIMESTAMP" property="ordercompletetime" />
+    <result column="startTime" jdbcType="TIMESTAMP" property="starttime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    orderid, guestInfo, orderTime, endTime, ostatus, totalprice, hid, pamount, ptime, 
+    pstatus, ptransactionId, uid, lid, orderNumber, orderGenTime, orderCompleteTime, 
+    startTime
+  </sql>
+  <select id="selectByExample" parameterType="com.hall.Bean.OrdersExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from orders
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from orders
+    where orderid = #{orderid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from orders
+    where orderid = #{orderid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hall.Bean.OrdersExample">
+    delete from orders
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hall.Bean.Orders">
+    insert into orders (orderid, guestInfo, orderTime, 
+      endTime, ostatus, totalprice, 
+      hid, pamount, ptime, 
+      pstatus, ptransactionId, uid, 
+      lid, orderNumber, orderGenTime, 
+      orderCompleteTime, startTime)
+    values (#{orderid,jdbcType=INTEGER}, #{guestinfo,jdbcType=CHAR}, #{ordertime,jdbcType=TIMESTAMP}, 
+      #{endtime,jdbcType=TIMESTAMP}, #{ostatus,jdbcType=VARCHAR}, #{totalprice,jdbcType=DECIMAL}, 
+      #{hid,jdbcType=INTEGER}, #{pamount,jdbcType=DECIMAL}, #{ptime,jdbcType=TIMESTAMP}, 
+      #{pstatus,jdbcType=VARCHAR}, #{ptransactionid,jdbcType=VARCHAR}, #{uid,jdbcType=INTEGER}, 
+      #{lid,jdbcType=INTEGER}, #{ordernumber,jdbcType=VARCHAR}, #{ordergentime,jdbcType=TIMESTAMP}, 
+      #{ordercompletetime,jdbcType=TIMESTAMP}, #{starttime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hall.Bean.Orders" keyProperty="orderid" keyColumn="orderid" useGeneratedKeys="true">
+    insert into orders
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderid != null">
+        orderid,
+      </if>
+      <if test="guestinfo != null">
+        guestInfo,
+      </if>
+      <if test="ordertime != null">
+        orderTime,
+      </if>
+      <if test="endtime != null">
+        endTime,
+      </if>
+      <if test="ostatus != null">
+        ostatus,
+      </if>
+      <if test="totalprice != null">
+        totalprice,
+      </if>
+      <if test="hid != null">
+        hid,
+      </if>
+      <if test="pamount != null">
+        pamount,
+      </if>
+      <if test="ptime != null">
+        ptime,
+      </if>
+      <if test="pstatus != null">
+        pstatus,
+      </if>
+      <if test="ptransactionid != null">
+        ptransactionId,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="lid != null">
+        lid,
+      </if>
+      <if test="ordernumber != null">
+        orderNumber,
+      </if>
+      <if test="ordergentime != null">
+        orderGenTime,
+      </if>
+      <if test="ordercompletetime != null">
+        orderCompleteTime,
+      </if>
+      <if test="starttime != null">
+        startTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderid != null">
+        #{orderid,jdbcType=INTEGER},
+      </if>
+      <if test="guestinfo != null">
+        #{guestinfo,jdbcType=CHAR},
+      </if>
+      <if test="ordertime != null">
+        #{ordertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null">
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ostatus != null">
+        #{ostatus,jdbcType=VARCHAR},
+      </if>
+      <if test="totalprice != null">
+        #{totalprice,jdbcType=DECIMAL},
+      </if>
+      <if test="hid != null">
+        #{hid,jdbcType=INTEGER},
+      </if>
+      <if test="pamount != null">
+        #{pamount,jdbcType=DECIMAL},
+      </if>
+      <if test="ptime != null">
+        #{ptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pstatus != null">
+        #{pstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="ptransactionid != null">
+        #{ptransactionid,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="lid != null">
+        #{lid,jdbcType=INTEGER},
+      </if>
+      <if test="ordernumber != null">
+        #{ordernumber,jdbcType=VARCHAR},
+      </if>
+      <if test="ordergentime != null">
+        #{ordergentime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ordercompletetime != null">
+        #{ordercompletetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="starttime != null">
+        #{starttime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hall.Bean.OrdersExample" resultType="java.lang.Long">
+    select count(*) from orders
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update orders
+    <set>
+      <if test="record.orderid != null">
+        orderid = #{record.orderid,jdbcType=INTEGER},
+      </if>
+      <if test="record.guestinfo != null">
+        guestInfo = #{record.guestinfo,jdbcType=CHAR},
+      </if>
+      <if test="record.ordertime != null">
+        orderTime = #{record.ordertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endtime != null">
+        endTime = #{record.endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.ostatus != null">
+        ostatus = #{record.ostatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalprice != null">
+        totalprice = #{record.totalprice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.hid != null">
+        hid = #{record.hid,jdbcType=INTEGER},
+      </if>
+      <if test="record.pamount != null">
+        pamount = #{record.pamount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.ptime != null">
+        ptime = #{record.ptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.pstatus != null">
+        pstatus = #{record.pstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ptransactionid != null">
+        ptransactionId = #{record.ptransactionid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uid != null">
+        uid = #{record.uid,jdbcType=INTEGER},
+      </if>
+      <if test="record.lid != null">
+        lid = #{record.lid,jdbcType=INTEGER},
+      </if>
+      <if test="record.ordernumber != null">
+        orderNumber = #{record.ordernumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ordergentime != null">
+        orderGenTime = #{record.ordergentime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.ordercompletetime != null">
+        orderCompleteTime = #{record.ordercompletetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.starttime != null">
+        startTime = #{record.starttime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update orders
+    set orderid = #{record.orderid,jdbcType=INTEGER},
+      guestInfo = #{record.guestinfo,jdbcType=CHAR},
+      orderTime = #{record.ordertime,jdbcType=TIMESTAMP},
+      endTime = #{record.endtime,jdbcType=TIMESTAMP},
+      ostatus = #{record.ostatus,jdbcType=VARCHAR},
+      totalprice = #{record.totalprice,jdbcType=DECIMAL},
+      hid = #{record.hid,jdbcType=INTEGER},
+      pamount = #{record.pamount,jdbcType=DECIMAL},
+      ptime = #{record.ptime,jdbcType=TIMESTAMP},
+      pstatus = #{record.pstatus,jdbcType=VARCHAR},
+      ptransactionId = #{record.ptransactionid,jdbcType=VARCHAR},
+      uid = #{record.uid,jdbcType=INTEGER},
+      lid = #{record.lid,jdbcType=INTEGER},
+      orderNumber = #{record.ordernumber,jdbcType=VARCHAR},
+      orderGenTime = #{record.ordergentime,jdbcType=TIMESTAMP},
+      orderCompleteTime = #{record.ordercompletetime,jdbcType=TIMESTAMP},
+      startTime = #{record.starttime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hall.Bean.Orders">
+    update orders
+    <set>
+      <if test="guestinfo != null">
+        guestInfo = #{guestinfo,jdbcType=CHAR},
+      </if>
+      <if test="ordertime != null">
+        orderTime = #{ordertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null">
+        endTime = #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ostatus != null">
+        ostatus = #{ostatus,jdbcType=VARCHAR},
+      </if>
+      <if test="totalprice != null">
+        totalprice = #{totalprice,jdbcType=DECIMAL},
+      </if>
+      <if test="hid != null">
+        hid = #{hid,jdbcType=INTEGER},
+      </if>
+      <if test="pamount != null">
+        pamount = #{pamount,jdbcType=DECIMAL},
+      </if>
+      <if test="ptime != null">
+        ptime = #{ptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pstatus != null">
+        pstatus = #{pstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="ptransactionid != null">
+        ptransactionId = #{ptransactionid,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="lid != null">
+        lid = #{lid,jdbcType=INTEGER},
+      </if>
+      <if test="ordernumber != null">
+        orderNumber = #{ordernumber,jdbcType=VARCHAR},
+      </if>
+      <if test="ordergentime != null">
+        orderGenTime = #{ordergentime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ordercompletetime != null">
+        orderCompleteTime = #{ordercompletetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="starttime != null">
+        startTime = #{starttime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where orderid = #{orderid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hall.Bean.Orders">
+    update orders
+    set guestInfo = #{guestinfo,jdbcType=CHAR},
+      orderTime = #{ordertime,jdbcType=TIMESTAMP},
+      endTime = #{endtime,jdbcType=TIMESTAMP},
+      ostatus = #{ostatus,jdbcType=VARCHAR},
+      totalprice = #{totalprice,jdbcType=DECIMAL},
+      hid = #{hid,jdbcType=INTEGER},
+      pamount = #{pamount,jdbcType=DECIMAL},
+      ptime = #{ptime,jdbcType=TIMESTAMP},
+      pstatus = #{pstatus,jdbcType=VARCHAR},
+      ptransactionId = #{ptransactionid,jdbcType=VARCHAR},
+      uid = #{uid,jdbcType=INTEGER},
+      lid = #{lid,jdbcType=INTEGER},
+      orderNumber = #{ordernumber,jdbcType=VARCHAR},
+      orderGenTime = #{ordergentime,jdbcType=TIMESTAMP},
+      orderCompleteTime = #{ordercompletetime,jdbcType=TIMESTAMP},
+      startTime = #{starttime,jdbcType=TIMESTAMP}
+    where orderid = #{orderid,jdbcType=INTEGER}
+  </update>
+
+  <select id="findOverlappingOrders" parameterType="map" resultType="com.hall.Bean.Orders">
+    SELECT *
+    FROM orders
+    WHERE hid = #{houseid}
+      AND ostatus IN ('进行中', '待入住')
+      AND (
+    #{startTime} > startTime AND #{startTime} &lt; endTime
+    OR #{endTime} > startTime AND #{endTime} &lt; endTime
+    OR startTime > #{startTime} AND startTime &lt; #{endTime}
+      )
+  </select>
+
+  <update id="closeSameOrder" parameterType="map" >
+    update orders
+    set ostatus='已关闭'
+    WHERE hid = #{houseid}
+      AND ostatus = '待支付'
+      AND (
+            #{startTime} > startTime AND #{startTime} &lt; endTime
+        OR #{endTime} > startTime AND #{endTime} &lt; endTime
+        OR startTime > #{startTime} AND startTime &lt; #{endTime}
+      )
+  </update>
+
+  <select id="getOrderBriefInfo" parameterType="java.lang.String" resultType="com.hall.Bean.Orders">
+    select * from orders where orderNumber=#{orderNum}
+  </select>
+
+  <select id="getNotArrived" parameterType="java.lang.Integer" resultType="java.math.BigDecimal">
+    SELECT SUM(totalprice) AS notArrived
+    FROM orders
+    WHERE lid = #{lid}
+    and  ostatus in ('进行中','待入住')
+  </select>
+</mapper>

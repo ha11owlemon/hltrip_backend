@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hall.DAO.houseImagesMapper">
+  <resultMap id="BaseResultMap" type="com.hall.Bean.houseImages">
+    <id column="imageId" jdbcType="INTEGER" property="imageid" />
+    <result column="houseId" jdbcType="INTEGER" property="houseid" />
+    <result column="imageType" jdbcType="CHAR" property="imagetype" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="imgPath" jdbcType="VARCHAR" property="imgpath" />
+    <result column="uploadTime" jdbcType="TIMESTAMP" property="uploadtime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    imageId, houseId, imageType, url, imgPath, uploadTime
+  </sql>
+  <select id="selectByExample" parameterType="com.hall.Bean.houseImagesExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from house_images
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from house_images
+    where imageId = #{imageid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from house_images
+    where imageId = #{imageid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hall.Bean.houseImagesExample">
+    delete from house_images
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hall.Bean.houseImages">
+    insert into house_images (imageId, houseId, imageType, 
+      url, imgPath, uploadTime
+      )
+    values (#{imageid,jdbcType=INTEGER}, #{houseid,jdbcType=INTEGER}, #{imagetype,jdbcType=CHAR}, 
+      #{url,jdbcType=VARCHAR}, #{imgpath,jdbcType=VARCHAR}, #{uploadtime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hall.Bean.houseImages">
+    insert into house_images
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="imageid != null">
+        imageId,
+      </if>
+      <if test="houseid != null">
+        houseId,
+      </if>
+      <if test="imagetype != null">
+        imageType,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="imgpath != null">
+        imgPath,
+      </if>
+      <if test="uploadtime != null">
+        uploadTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="imageid != null">
+        #{imageid,jdbcType=INTEGER},
+      </if>
+      <if test="houseid != null">
+        #{houseid,jdbcType=INTEGER},
+      </if>
+      <if test="imagetype != null">
+        #{imagetype,jdbcType=CHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="imgpath != null">
+        #{imgpath,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadtime != null">
+        #{uploadtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hall.Bean.houseImagesExample" resultType="java.lang.Long">
+    select count(*) from house_images
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update house_images
+    <set>
+      <if test="record.imageid != null">
+        imageId = #{record.imageid,jdbcType=INTEGER},
+      </if>
+      <if test="record.houseid != null">
+        houseId = #{record.houseid,jdbcType=INTEGER},
+      </if>
+      <if test="record.imagetype != null">
+        imageType = #{record.imagetype,jdbcType=CHAR},
+      </if>
+      <if test="record.url != null">
+        url = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imgpath != null">
+        imgPath = #{record.imgpath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uploadtime != null">
+        uploadTime = #{record.uploadtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update house_images
+    set imageId = #{record.imageid,jdbcType=INTEGER},
+      houseId = #{record.houseid,jdbcType=INTEGER},
+      imageType = #{record.imagetype,jdbcType=CHAR},
+      url = #{record.url,jdbcType=VARCHAR},
+      imgPath = #{record.imgpath,jdbcType=VARCHAR},
+      uploadTime = #{record.uploadtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hall.Bean.houseImages">
+    update house_images
+    <set>
+      <if test="houseid != null">
+        houseId = #{houseid,jdbcType=INTEGER},
+      </if>
+      <if test="imagetype != null">
+        imageType = #{imagetype,jdbcType=CHAR},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="imgpath != null">
+        imgPath = #{imgpath,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadtime != null">
+        uploadTime = #{uploadtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where imageId = #{imageid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hall.Bean.houseImages">
+    update house_images
+    set houseId = #{houseid,jdbcType=INTEGER},
+      imageType = #{imagetype,jdbcType=CHAR},
+      url = #{url,jdbcType=VARCHAR},
+      imgPath = #{imgpath,jdbcType=VARCHAR},
+      uploadTime = #{uploadtime,jdbcType=TIMESTAMP}
+    where imageId = #{imageid,jdbcType=INTEGER}
+  </update>
+
+  <select id="getBriefUrlbyHouseId" parameterType="java.lang.Integer" resultType="java.lang.String">
+    select url from house_images where houseId=#{houseid} LIMIT 5
+  </select>
+</mapper>

@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hall.DAO.HouseFacilitiesMapper">
+  <resultMap id="BaseResultMap" type="com.hall.Bean.HouseFacilities">
+    <id column="facilitiesId" jdbcType="INTEGER" property="facilitiesid" />
+    <result column="houseId" jdbcType="INTEGER" property="houseid" />
+    <result column="service" jdbcType="VARCHAR" property="service" />
+    <result column="basic" jdbcType="VARCHAR" property="basic" />
+    <result column="bathroom" jdbcType="VARCHAR" property="bathroom" />
+    <result column="kitchen" jdbcType="VARCHAR" property="kitchen" />
+    <result column="surrounding" jdbcType="VARCHAR" property="surrounding" />
+    <result column="safety" jdbcType="VARCHAR" property="safety" />
+    <result column="entertainment" jdbcType="VARCHAR" property="entertainment" />
+    <result column="leisure" jdbcType="VARCHAR" property="leisure" />
+    <result column="children" jdbcType="VARCHAR" property="children" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    facilitiesId, houseId, service, basic, bathroom, kitchen, surrounding, safety, entertainment, 
+    leisure, children
+  </sql>
+  <select id="selectByExample" parameterType="com.hall.Bean.HouseFacilitiesExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from house_facilities
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from house_facilities
+    where facilitiesId = #{facilitiesid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from house_facilities
+    where facilitiesId = #{facilitiesid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hall.Bean.HouseFacilitiesExample">
+    delete from house_facilities
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hall.Bean.HouseFacilities">
+    insert into house_facilities (facilitiesId, houseId, service, 
+      basic, bathroom, kitchen, 
+      surrounding, safety, entertainment, 
+      leisure, children)
+    values (#{facilitiesid,jdbcType=INTEGER}, #{houseid,jdbcType=INTEGER}, #{service,jdbcType=VARCHAR}, 
+      #{basic,jdbcType=VARCHAR}, #{bathroom,jdbcType=VARCHAR}, #{kitchen,jdbcType=VARCHAR}, 
+      #{surrounding,jdbcType=VARCHAR}, #{safety,jdbcType=VARCHAR}, #{entertainment,jdbcType=VARCHAR}, 
+      #{leisure,jdbcType=VARCHAR}, #{children,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hall.Bean.HouseFacilities">
+    insert into house_facilities
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="facilitiesid != null">
+        facilitiesId,
+      </if>
+      <if test="houseid != null">
+        houseId,
+      </if>
+      <if test="service != null">
+        service,
+      </if>
+      <if test="basic != null">
+        basic,
+      </if>
+      <if test="bathroom != null">
+        bathroom,
+      </if>
+      <if test="kitchen != null">
+        kitchen,
+      </if>
+      <if test="surrounding != null">
+        surrounding,
+      </if>
+      <if test="safety != null">
+        safety,
+      </if>
+      <if test="entertainment != null">
+        entertainment,
+      </if>
+      <if test="leisure != null">
+        leisure,
+      </if>
+      <if test="children != null">
+        children,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="facilitiesid != null">
+        #{facilitiesid,jdbcType=INTEGER},
+      </if>
+      <if test="houseid != null">
+        #{houseid,jdbcType=INTEGER},
+      </if>
+      <if test="service != null">
+        #{service,jdbcType=VARCHAR},
+      </if>
+      <if test="basic != null">
+        #{basic,jdbcType=VARCHAR},
+      </if>
+      <if test="bathroom != null">
+        #{bathroom,jdbcType=VARCHAR},
+      </if>
+      <if test="kitchen != null">
+        #{kitchen,jdbcType=VARCHAR},
+      </if>
+      <if test="surrounding != null">
+        #{surrounding,jdbcType=VARCHAR},
+      </if>
+      <if test="safety != null">
+        #{safety,jdbcType=VARCHAR},
+      </if>
+      <if test="entertainment != null">
+        #{entertainment,jdbcType=VARCHAR},
+      </if>
+      <if test="leisure != null">
+        #{leisure,jdbcType=VARCHAR},
+      </if>
+      <if test="children != null">
+        #{children,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hall.Bean.HouseFacilitiesExample" resultType="java.lang.Long">
+    select count(*) from house_facilities
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update house_facilities
+    <set>
+      <if test="record.facilitiesid != null">
+        facilitiesId = #{record.facilitiesid,jdbcType=INTEGER},
+      </if>
+      <if test="record.houseid != null">
+        houseId = #{record.houseid,jdbcType=INTEGER},
+      </if>
+      <if test="record.service != null">
+        service = #{record.service,jdbcType=VARCHAR},
+      </if>
+      <if test="record.basic != null">
+        basic = #{record.basic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bathroom != null">
+        bathroom = #{record.bathroom,jdbcType=VARCHAR},
+      </if>
+      <if test="record.kitchen != null">
+        kitchen = #{record.kitchen,jdbcType=VARCHAR},
+      </if>
+      <if test="record.surrounding != null">
+        surrounding = #{record.surrounding,jdbcType=VARCHAR},
+      </if>
+      <if test="record.safety != null">
+        safety = #{record.safety,jdbcType=VARCHAR},
+      </if>
+      <if test="record.entertainment != null">
+        entertainment = #{record.entertainment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.leisure != null">
+        leisure = #{record.leisure,jdbcType=VARCHAR},
+      </if>
+      <if test="record.children != null">
+        children = #{record.children,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update house_facilities
+    set facilitiesId = #{record.facilitiesid,jdbcType=INTEGER},
+      houseId = #{record.houseid,jdbcType=INTEGER},
+      service = #{record.service,jdbcType=VARCHAR},
+      basic = #{record.basic,jdbcType=VARCHAR},
+      bathroom = #{record.bathroom,jdbcType=VARCHAR},
+      kitchen = #{record.kitchen,jdbcType=VARCHAR},
+      surrounding = #{record.surrounding,jdbcType=VARCHAR},
+      safety = #{record.safety,jdbcType=VARCHAR},
+      entertainment = #{record.entertainment,jdbcType=VARCHAR},
+      leisure = #{record.leisure,jdbcType=VARCHAR},
+      children = #{record.children,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hall.Bean.HouseFacilities">
+    update house_facilities
+    <set>
+      <if test="houseid != null">
+        houseId = #{houseid,jdbcType=INTEGER},
+      </if>
+      <if test="service != null">
+        service = #{service,jdbcType=VARCHAR},
+      </if>
+      <if test="basic != null">
+        basic = #{basic,jdbcType=VARCHAR},
+      </if>
+      <if test="bathroom != null">
+        bathroom = #{bathroom,jdbcType=VARCHAR},
+      </if>
+      <if test="kitchen != null">
+        kitchen = #{kitchen,jdbcType=VARCHAR},
+      </if>
+      <if test="surrounding != null">
+        surrounding = #{surrounding,jdbcType=VARCHAR},
+      </if>
+      <if test="safety != null">
+        safety = #{safety,jdbcType=VARCHAR},
+      </if>
+      <if test="entertainment != null">
+        entertainment = #{entertainment,jdbcType=VARCHAR},
+      </if>
+      <if test="leisure != null">
+        leisure = #{leisure,jdbcType=VARCHAR},
+      </if>
+      <if test="children != null">
+        children = #{children,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where facilitiesId = #{facilitiesid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hall.Bean.HouseFacilities">
+    update house_facilities
+    set houseId = #{houseid,jdbcType=INTEGER},
+      service = #{service,jdbcType=VARCHAR},
+      basic = #{basic,jdbcType=VARCHAR},
+      bathroom = #{bathroom,jdbcType=VARCHAR},
+      kitchen = #{kitchen,jdbcType=VARCHAR},
+      surrounding = #{surrounding,jdbcType=VARCHAR},
+      safety = #{safety,jdbcType=VARCHAR},
+      entertainment = #{entertainment,jdbcType=VARCHAR},
+      leisure = #{leisure,jdbcType=VARCHAR},
+      children = #{children,jdbcType=VARCHAR}
+    where facilitiesId = #{facilitiesid,jdbcType=INTEGER}
+  </update>
+
+  <select id="getFacilityByHouseid" parameterType="java.lang.Integer" resultType="com.hall.Bean.HouseFacilities">
+    select * from house_facilities where houseId=#{id}
+  </select>
+</mapper>

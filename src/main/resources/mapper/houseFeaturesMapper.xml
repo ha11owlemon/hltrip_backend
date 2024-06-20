@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hall.DAO.houseFeaturesMapper">
+  <resultMap id="BaseResultMap" type="com.hall.Bean.houseFeatures">
+    <id column="featureId" jdbcType="INTEGER" property="featureid" />
+    <result column="houseId" jdbcType="INTEGER" property="houseid" />
+    <result column="featureType" jdbcType="VARCHAR" property="featuretype" />
+    <result column="featureContent" jdbcType="VARCHAR" property="featurecontent" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    featureId, houseId, featureType, featureContent
+  </sql>
+  <select id="selectByExample" parameterType="com.hall.Bean.houseFeaturesExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from house_features
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from house_features
+    where featureId = #{featureid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from house_features
+    where featureId = #{featureid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hall.Bean.houseFeaturesExample">
+    delete from house_features
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hall.Bean.houseFeatures">
+    insert into house_features (featureId, houseId, featureType, 
+      featureContent)
+    values (#{featureid,jdbcType=INTEGER}, #{houseid,jdbcType=INTEGER}, #{featuretype,jdbcType=VARCHAR}, 
+      #{featurecontent,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hall.Bean.houseFeatures">
+    insert into house_features
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="featureid != null">
+        featureId,
+      </if>
+      <if test="houseid != null">
+        houseId,
+      </if>
+      <if test="featuretype != null">
+        featureType,
+      </if>
+      <if test="featurecontent != null">
+        featureContent,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="featureid != null">
+        #{featureid,jdbcType=INTEGER},
+      </if>
+      <if test="houseid != null">
+        #{houseid,jdbcType=INTEGER},
+      </if>
+      <if test="featuretype != null">
+        #{featuretype,jdbcType=VARCHAR},
+      </if>
+      <if test="featurecontent != null">
+        #{featurecontent,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hall.Bean.houseFeaturesExample" resultType="java.lang.Long">
+    select count(*) from house_features
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update house_features
+    <set>
+      <if test="record.featureid != null">
+        featureId = #{record.featureid,jdbcType=INTEGER},
+      </if>
+      <if test="record.houseid != null">
+        houseId = #{record.houseid,jdbcType=INTEGER},
+      </if>
+      <if test="record.featuretype != null">
+        featureType = #{record.featuretype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.featurecontent != null">
+        featureContent = #{record.featurecontent,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update house_features
+    set featureId = #{record.featureid,jdbcType=INTEGER},
+      houseId = #{record.houseid,jdbcType=INTEGER},
+      featureType = #{record.featuretype,jdbcType=VARCHAR},
+      featureContent = #{record.featurecontent,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hall.Bean.houseFeatures">
+    update house_features
+    <set>
+      <if test="houseid != null">
+        houseId = #{houseid,jdbcType=INTEGER},
+      </if>
+      <if test="featuretype != null">
+        featureType = #{featuretype,jdbcType=VARCHAR},
+      </if>
+      <if test="featurecontent != null">
+        featureContent = #{featurecontent,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where featureId = #{featureid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hall.Bean.houseFeatures">
+    update house_features
+    set houseId = #{houseid,jdbcType=INTEGER},
+      featureType = #{featuretype,jdbcType=VARCHAR},
+      featureContent = #{featurecontent,jdbcType=VARCHAR}
+    where featureId = #{featureid,jdbcType=INTEGER}
+  </update>
+</mapper>

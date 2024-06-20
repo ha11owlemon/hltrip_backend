@@ -1,0 +1,567 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hall.DAO.HouseOverviewMapper">
+  <resultMap id="BaseResultMap" type="com.hall.Bean.HouseOverview">
+    <id column="houseId" jdbcType="INTEGER" property="houseid" />
+    <result column="coverUrl" jdbcType="VARCHAR" property="coverurl" />
+    <result column="bedCount" jdbcType="INTEGER" property="bedcount" />
+    <result column="roomCount" jdbcType="INTEGER" property="roomcount" />
+    <result column="discountPrice" jdbcType="DOUBLE" property="discountprice" />
+    <result column="originalPrice" jdbcType="DOUBLE" property="originalprice" />
+    <result column="viewCount" jdbcType="INTEGER" property="viewcount" />
+    <result column="favoriteCount" jdbcType="INTEGER" property="favoritecount" />
+    <result column="dealCount" jdbcType="INTEGER" property="dealcount" />
+    <result column="houseName" jdbcType="VARCHAR" property="housename" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="rentalType" jdbcType="CHAR" property="rentaltype" />
+    <result column="bathroomCount" jdbcType="INTEGER" property="bathroomcount" />
+    <result column="kitchenCount" jdbcType="INTEGER" property="kitchencount" />
+    <result column="maxGuests" jdbcType="INTEGER" property="maxguests" />
+    <result column="houseType" jdbcType="CHAR" property="housetype" />
+    <result column="landlordId" jdbcType="INTEGER" property="landlordid" />
+    <result column="landlordNickname" jdbcType="VARCHAR" property="landlordnickname" />
+    <result column="bed218" jdbcType="INTEGER" property="bed218" />
+    <result column="bed215" jdbcType="INTEGER" property="bed215" />
+    <result column="bed212" jdbcType="INTEGER" property="bed212" />
+    <result column="tatami" jdbcType="VARCHAR" property="tatami" />
+    <result column="commentCount" jdbcType="INTEGER" property="commentcount" />
+    <result column="rating" jdbcType="DOUBLE" property="rating" />
+    <result column="vStatus" jdbcType="CHAR" property="vstatus" />
+    <result column="hotValue" jdbcType="INTEGER" property="hotvalue" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    houseId, coverUrl, bedCount, roomCount, discountPrice, originalPrice, viewCount, 
+    favoriteCount, dealCount, houseName, address, rentalType, bathroomCount, kitchenCount, 
+    maxGuests, houseType, landlordId, landlordNickname, bed218, bed215, bed212, tatami, 
+    commentCount, rating, vStatus, hotValue
+  </sql>
+  <select id="selectByExample" parameterType="com.hall.Bean.HouseOverviewExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from house_overview
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from house_overview
+    where houseId = #{houseid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from house_overview
+    where houseId = #{houseid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hall.Bean.HouseOverviewExample">
+    delete from house_overview
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hall.Bean.HouseOverview">
+    insert into house_overview (houseId, coverUrl, bedCount, 
+      roomCount, discountPrice, originalPrice, 
+      viewCount, favoriteCount, dealCount, 
+      houseName, address, rentalType, 
+      bathroomCount, kitchenCount, maxGuests, 
+      houseType, landlordId, landlordNickname, 
+      bed218, bed215, bed212, 
+      tatami, commentCount, rating, 
+      vStatus, hotValue)
+    values (#{houseid,jdbcType=INTEGER}, #{coverurl,jdbcType=VARCHAR}, #{bedcount,jdbcType=INTEGER}, 
+      #{roomcount,jdbcType=INTEGER}, #{discountprice,jdbcType=DOUBLE}, #{originalprice,jdbcType=DOUBLE}, 
+      #{viewcount,jdbcType=INTEGER}, #{favoritecount,jdbcType=INTEGER}, #{dealcount,jdbcType=INTEGER}, 
+      #{housename,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{rentaltype,jdbcType=CHAR}, 
+      #{bathroomcount,jdbcType=INTEGER}, #{kitchencount,jdbcType=INTEGER}, #{maxguests,jdbcType=INTEGER}, 
+      #{housetype,jdbcType=CHAR}, #{landlordid,jdbcType=INTEGER}, #{landlordnickname,jdbcType=VARCHAR}, 
+      #{bed218,jdbcType=INTEGER}, #{bed215,jdbcType=INTEGER}, #{bed212,jdbcType=INTEGER}, 
+      #{tatami,jdbcType=VARCHAR}, #{commentcount,jdbcType=INTEGER}, #{rating,jdbcType=DOUBLE}, 
+      #{vstatus,jdbcType=CHAR}, #{hotvalue,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hall.Bean.HouseOverview" keyProperty="houseid" keyColumn="houseId" useGeneratedKeys="true">
+    insert into house_overview
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="houseid != null">
+        houseId,
+      </if>
+      <if test="coverurl != null">
+        coverUrl,
+      </if>
+      <if test="bedcount != null">
+        bedCount,
+      </if>
+      <if test="roomcount != null">
+        roomCount,
+      </if>
+      <if test="discountprice != null">
+        discountPrice,
+      </if>
+      <if test="originalprice != null">
+        originalPrice,
+      </if>
+      <if test="viewcount != null">
+        viewCount,
+      </if>
+      <if test="favoritecount != null">
+        favoriteCount,
+      </if>
+      <if test="dealcount != null">
+        dealCount,
+      </if>
+      <if test="housename != null">
+        houseName,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="rentaltype != null">
+        rentalType,
+      </if>
+      <if test="bathroomcount != null">
+        bathroomCount,
+      </if>
+      <if test="kitchencount != null">
+        kitchenCount,
+      </if>
+      <if test="maxguests != null">
+        maxGuests,
+      </if>
+      <if test="housetype != null">
+        houseType,
+      </if>
+      <if test="landlordid != null">
+        landlordId,
+      </if>
+      <if test="landlordnickname != null">
+        landlordNickname,
+      </if>
+      <if test="bed218 != null">
+        bed218,
+      </if>
+      <if test="bed215 != null">
+        bed215,
+      </if>
+      <if test="bed212 != null">
+        bed212,
+      </if>
+      <if test="tatami != null">
+        tatami,
+      </if>
+      <if test="commentcount != null">
+        commentCount,
+      </if>
+      <if test="rating != null">
+        rating,
+      </if>
+      <if test="vstatus != null">
+        vStatus,
+      </if>
+      <if test="hotvalue != null">
+        hotValue,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="houseid != null">
+        #{houseid,jdbcType=INTEGER},
+      </if>
+      <if test="coverurl != null">
+        #{coverurl,jdbcType=VARCHAR},
+      </if>
+      <if test="bedcount != null">
+        #{bedcount,jdbcType=INTEGER},
+      </if>
+      <if test="roomcount != null">
+        #{roomcount,jdbcType=INTEGER},
+      </if>
+      <if test="discountprice != null">
+        #{discountprice,jdbcType=DOUBLE},
+      </if>
+      <if test="originalprice != null">
+        #{originalprice,jdbcType=DOUBLE},
+      </if>
+      <if test="viewcount != null">
+        #{viewcount,jdbcType=INTEGER},
+      </if>
+      <if test="favoritecount != null">
+        #{favoritecount,jdbcType=INTEGER},
+      </if>
+      <if test="dealcount != null">
+        #{dealcount,jdbcType=INTEGER},
+      </if>
+      <if test="housename != null">
+        #{housename,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="rentaltype != null">
+        #{rentaltype,jdbcType=CHAR},
+      </if>
+      <if test="bathroomcount != null">
+        #{bathroomcount,jdbcType=INTEGER},
+      </if>
+      <if test="kitchencount != null">
+        #{kitchencount,jdbcType=INTEGER},
+      </if>
+      <if test="maxguests != null">
+        #{maxguests,jdbcType=INTEGER},
+      </if>
+      <if test="housetype != null">
+        #{housetype,jdbcType=CHAR},
+      </if>
+      <if test="landlordid != null">
+        #{landlordid,jdbcType=INTEGER},
+      </if>
+      <if test="landlordnickname != null">
+        #{landlordnickname,jdbcType=VARCHAR},
+      </if>
+      <if test="bed218 != null">
+        #{bed218,jdbcType=INTEGER},
+      </if>
+      <if test="bed215 != null">
+        #{bed215,jdbcType=INTEGER},
+      </if>
+      <if test="bed212 != null">
+        #{bed212,jdbcType=INTEGER},
+      </if>
+      <if test="tatami != null">
+        #{tatami,jdbcType=VARCHAR},
+      </if>
+      <if test="commentcount != null">
+        #{commentcount,jdbcType=INTEGER},
+      </if>
+      <if test="rating != null">
+        #{rating,jdbcType=DOUBLE},
+      </if>
+      <if test="vstatus != null">
+        #{vstatus,jdbcType=CHAR},
+      </if>
+      <if test="hotvalue != null">
+        #{hotvalue,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hall.Bean.HouseOverviewExample" resultType="java.lang.Long">
+    select count(*) from house_overview
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update house_overview
+    <set>
+      <if test="record.houseid != null">
+        houseId = #{record.houseid,jdbcType=INTEGER},
+      </if>
+      <if test="record.coverurl != null">
+        coverUrl = #{record.coverurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bedcount != null">
+        bedCount = #{record.bedcount,jdbcType=INTEGER},
+      </if>
+      <if test="record.roomcount != null">
+        roomCount = #{record.roomcount,jdbcType=INTEGER},
+      </if>
+      <if test="record.discountprice != null">
+        discountPrice = #{record.discountprice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.originalprice != null">
+        originalPrice = #{record.originalprice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.viewcount != null">
+        viewCount = #{record.viewcount,jdbcType=INTEGER},
+      </if>
+      <if test="record.favoritecount != null">
+        favoriteCount = #{record.favoritecount,jdbcType=INTEGER},
+      </if>
+      <if test="record.dealcount != null">
+        dealCount = #{record.dealcount,jdbcType=INTEGER},
+      </if>
+      <if test="record.housename != null">
+        houseName = #{record.housename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null">
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rentaltype != null">
+        rentalType = #{record.rentaltype,jdbcType=CHAR},
+      </if>
+      <if test="record.bathroomcount != null">
+        bathroomCount = #{record.bathroomcount,jdbcType=INTEGER},
+      </if>
+      <if test="record.kitchencount != null">
+        kitchenCount = #{record.kitchencount,jdbcType=INTEGER},
+      </if>
+      <if test="record.maxguests != null">
+        maxGuests = #{record.maxguests,jdbcType=INTEGER},
+      </if>
+      <if test="record.housetype != null">
+        houseType = #{record.housetype,jdbcType=CHAR},
+      </if>
+      <if test="record.landlordid != null">
+        landlordId = #{record.landlordid,jdbcType=INTEGER},
+      </if>
+      <if test="record.landlordnickname != null">
+        landlordNickname = #{record.landlordnickname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bed218 != null">
+        bed218 = #{record.bed218,jdbcType=INTEGER},
+      </if>
+      <if test="record.bed215 != null">
+        bed215 = #{record.bed215,jdbcType=INTEGER},
+      </if>
+      <if test="record.bed212 != null">
+        bed212 = #{record.bed212,jdbcType=INTEGER},
+      </if>
+      <if test="record.tatami != null">
+        tatami = #{record.tatami,jdbcType=VARCHAR},
+      </if>
+      <if test="record.commentcount != null">
+        commentCount = #{record.commentcount,jdbcType=INTEGER},
+      </if>
+      <if test="record.rating != null">
+        rating = #{record.rating,jdbcType=DOUBLE},
+      </if>
+      <if test="record.vstatus != null">
+        vStatus = #{record.vstatus,jdbcType=CHAR},
+      </if>
+      <if test="record.hotvalue != null">
+        hotValue = #{record.hotvalue,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update house_overview
+    set houseId = #{record.houseid,jdbcType=INTEGER},
+      coverUrl = #{record.coverurl,jdbcType=VARCHAR},
+      bedCount = #{record.bedcount,jdbcType=INTEGER},
+      roomCount = #{record.roomcount,jdbcType=INTEGER},
+      discountPrice = #{record.discountprice,jdbcType=DOUBLE},
+      originalPrice = #{record.originalprice,jdbcType=DOUBLE},
+      viewCount = #{record.viewcount,jdbcType=INTEGER},
+      favoriteCount = #{record.favoritecount,jdbcType=INTEGER},
+      dealCount = #{record.dealcount,jdbcType=INTEGER},
+      houseName = #{record.housename,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      rentalType = #{record.rentaltype,jdbcType=CHAR},
+      bathroomCount = #{record.bathroomcount,jdbcType=INTEGER},
+      kitchenCount = #{record.kitchencount,jdbcType=INTEGER},
+      maxGuests = #{record.maxguests,jdbcType=INTEGER},
+      houseType = #{record.housetype,jdbcType=CHAR},
+      landlordId = #{record.landlordid,jdbcType=INTEGER},
+      landlordNickname = #{record.landlordnickname,jdbcType=VARCHAR},
+      bed218 = #{record.bed218,jdbcType=INTEGER},
+      bed215 = #{record.bed215,jdbcType=INTEGER},
+      bed212 = #{record.bed212,jdbcType=INTEGER},
+      tatami = #{record.tatami,jdbcType=VARCHAR},
+      commentCount = #{record.commentcount,jdbcType=INTEGER},
+      rating = #{record.rating,jdbcType=DOUBLE},
+      vStatus = #{record.vstatus,jdbcType=CHAR},
+      hotValue = #{record.hotvalue,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hall.Bean.HouseOverview">
+    update house_overview
+    <set>
+      <if test="coverurl != null">
+        coverUrl = #{coverurl,jdbcType=VARCHAR},
+      </if>
+      <if test="bedcount != null">
+        bedCount = #{bedcount,jdbcType=INTEGER},
+      </if>
+      <if test="roomcount != null">
+        roomCount = #{roomcount,jdbcType=INTEGER},
+      </if>
+      <if test="discountprice != null">
+        discountPrice = #{discountprice,jdbcType=DOUBLE},
+      </if>
+      <if test="originalprice != null">
+        originalPrice = #{originalprice,jdbcType=DOUBLE},
+      </if>
+      <if test="viewcount != null">
+        viewCount = #{viewcount,jdbcType=INTEGER},
+      </if>
+      <if test="favoritecount != null">
+        favoriteCount = #{favoritecount,jdbcType=INTEGER},
+      </if>
+      <if test="dealcount != null">
+        dealCount = #{dealcount,jdbcType=INTEGER},
+      </if>
+      <if test="housename != null">
+        houseName = #{housename,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="rentaltype != null">
+        rentalType = #{rentaltype,jdbcType=CHAR},
+      </if>
+      <if test="bathroomcount != null">
+        bathroomCount = #{bathroomcount,jdbcType=INTEGER},
+      </if>
+      <if test="kitchencount != null">
+        kitchenCount = #{kitchencount,jdbcType=INTEGER},
+      </if>
+      <if test="maxguests != null">
+        maxGuests = #{maxguests,jdbcType=INTEGER},
+      </if>
+      <if test="housetype != null">
+        houseType = #{housetype,jdbcType=CHAR},
+      </if>
+      <if test="landlordid != null">
+        landlordId = #{landlordid,jdbcType=INTEGER},
+      </if>
+      <if test="landlordnickname != null">
+        landlordNickname = #{landlordnickname,jdbcType=VARCHAR},
+      </if>
+      <if test="bed218 != null">
+        bed218 = #{bed218,jdbcType=INTEGER},
+      </if>
+      <if test="bed215 != null">
+        bed215 = #{bed215,jdbcType=INTEGER},
+      </if>
+      <if test="bed212 != null">
+        bed212 = #{bed212,jdbcType=INTEGER},
+      </if>
+      <if test="tatami != null">
+        tatami = #{tatami,jdbcType=VARCHAR},
+      </if>
+      <if test="commentcount != null">
+        commentCount = #{commentcount,jdbcType=INTEGER},
+      </if>
+      <if test="rating != null">
+        rating = #{rating,jdbcType=DOUBLE},
+      </if>
+      <if test="vstatus != null">
+        vStatus = #{vstatus,jdbcType=CHAR},
+      </if>
+      <if test="hotvalue != null">
+        hotValue = #{hotvalue,jdbcType=INTEGER},
+      </if>
+    </set>
+    where houseId = #{houseid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hall.Bean.HouseOverview">
+    update house_overview
+    set coverUrl = #{coverurl,jdbcType=VARCHAR},
+      bedCount = #{bedcount,jdbcType=INTEGER},
+      roomCount = #{roomcount,jdbcType=INTEGER},
+      discountPrice = #{discountprice,jdbcType=DOUBLE},
+      originalPrice = #{originalprice,jdbcType=DOUBLE},
+      viewCount = #{viewcount,jdbcType=INTEGER},
+      favoriteCount = #{favoritecount,jdbcType=INTEGER},
+      dealCount = #{dealcount,jdbcType=INTEGER},
+      houseName = #{housename,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      rentalType = #{rentaltype,jdbcType=CHAR},
+      bathroomCount = #{bathroomcount,jdbcType=INTEGER},
+      kitchenCount = #{kitchencount,jdbcType=INTEGER},
+      maxGuests = #{maxguests,jdbcType=INTEGER},
+      houseType = #{housetype,jdbcType=CHAR},
+      landlordId = #{landlordid,jdbcType=INTEGER},
+      landlordNickname = #{landlordnickname,jdbcType=VARCHAR},
+      bed218 = #{bed218,jdbcType=INTEGER},
+      bed215 = #{bed215,jdbcType=INTEGER},
+      bed212 = #{bed212,jdbcType=INTEGER},
+      tatami = #{tatami,jdbcType=VARCHAR},
+      commentCount = #{commentcount,jdbcType=INTEGER},
+      rating = #{rating,jdbcType=DOUBLE},
+      vStatus = #{vstatus,jdbcType=CHAR},
+      hotValue = #{hotvalue,jdbcType=INTEGER}
+    where houseId = #{houseid,jdbcType=INTEGER}
+  </update>
+  <select id="selectHouseIntroBylandlord" parameterType="java.lang.Integer" resultType="com.hall.Bean.HouseOverview">
+    select
+        coverUrl,houseId,discountPrice,originalPrice,houseName,rating,roomCount,bedCount,bed218,bed215,bed212,hotValue,commentCount
+    from house_overview
+    where landlordId=#{landlordid}
+  </select>
+
+  <update id="updateHouseViewcount" parameterType="java.lang.Integer" >
+    update house_overview set viewCount=#{viewcount} where houseId=#{houseid}
+  </update>
+
+  <select id="getHouseidsBylid" parameterType="java.lang.Integer" resultType="com.hall.Bean.HouseOverview">
+    select * from house_overview where landlordId=#{id}
+  </select>
+
+  <update id="updateCommentcount" parameterType="java.lang.Integer">
+    UPDATE house_overview SET commentCount = commentCount + 1 WHERE houseId = #{hid};
+  </update>
+
+  <update id="changelandlordname" parameterType="map">
+    UPDATE house_overview SET landlordNickname = #{name}  WHERE landlordId = #{lid};
+  </update>
+
+
+</mapper>

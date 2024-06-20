@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hall.DAO.CommentsMapper">
+  <resultMap id="BaseResultMap" type="com.hall.Bean.Comments">
+    <id column="commentId" jdbcType="INTEGER" property="commentid" />
+    <result column="houseId" jdbcType="INTEGER" property="houseid" />
+    <result column="userId" jdbcType="INTEGER" property="userid" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="landlordId" jdbcType="INTEGER" property="landlordid" />
+    <result column="hasImage" jdbcType="BIT" property="hasimage" />
+    <result column="cleanliness" jdbcType="DOUBLE" property="cleanliness" />
+    <result column="accuracy" jdbcType="DOUBLE" property="accuracy" />
+    <result column="locationTransport" jdbcType="DOUBLE" property="locationtransport" />
+    <result column="safety" jdbcType="DOUBLE" property="safety" />
+    <result column="valueForMmoney" jdbcType="DOUBLE" property="valueformmoney" />
+    <result column="rating" jdbcType="DOUBLE" property="rating" />
+    <result column="commentTime" jdbcType="TIMESTAMP" property="commenttime" />
+    <result column="replyTime" jdbcType="TIMESTAMP" property="replytime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.hall.Bean.CommentsWithBLOBs">
+    <result column="commentContent" jdbcType="LONGVARCHAR" property="commentcontent" />
+    <result column="landlordReply" jdbcType="LONGVARCHAR" property="landlordreply" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    commentId, houseId, userId, username, landlordId, hasImage, cleanliness, accuracy, 
+    locationTransport, safety, valueForMmoney, rating, commentTime, replyTime
+  </sql>
+  <sql id="Blob_Column_List">
+    commentContent, landlordReply
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.hall.Bean.CommentsExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from comments
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.hall.Bean.CommentsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from comments
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from comments
+    where commentId = #{commentid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from comments
+    where commentId = #{commentid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hall.Bean.CommentsExample">
+    delete from comments
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hall.Bean.CommentsWithBLOBs">
+    insert into comments (commentId, houseId, userId, 
+      username, landlordId, hasImage, 
+      cleanliness, accuracy, locationTransport, 
+      safety, valueForMmoney, rating, 
+      commentTime, replyTime, commentContent, 
+      landlordReply)
+    values (#{commentid,jdbcType=INTEGER}, #{houseid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, 
+      #{username,jdbcType=VARCHAR}, #{landlordid,jdbcType=INTEGER}, #{hasimage,jdbcType=BIT}, 
+      #{cleanliness,jdbcType=DOUBLE}, #{accuracy,jdbcType=DOUBLE}, #{locationtransport,jdbcType=DOUBLE}, 
+      #{safety,jdbcType=DOUBLE}, #{valueformmoney,jdbcType=DOUBLE}, #{rating,jdbcType=DOUBLE}, 
+      #{commenttime,jdbcType=TIMESTAMP}, #{replytime,jdbcType=TIMESTAMP}, #{commentcontent,jdbcType=LONGVARCHAR}, 
+      #{landlordreply,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hall.Bean.CommentsWithBLOBs" keyProperty="commentid" keyColumn="commentId" useGeneratedKeys="true" >
+    insert into comments
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="commentid != null">
+        commentId,
+      </if>
+      <if test="houseid != null">
+        houseId,
+      </if>
+      <if test="userid != null">
+        userId,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="landlordid != null">
+        landlordId,
+      </if>
+      <if test="hasimage != null">
+        hasImage,
+      </if>
+      <if test="cleanliness != null">
+        cleanliness,
+      </if>
+      <if test="accuracy != null">
+        accuracy,
+      </if>
+      <if test="locationtransport != null">
+        locationTransport,
+      </if>
+      <if test="safety != null">
+        safety,
+      </if>
+      <if test="valueformmoney != null">
+        valueForMmoney,
+      </if>
+      <if test="rating != null">
+        rating,
+      </if>
+      <if test="commenttime != null">
+        commentTime,
+      </if>
+      <if test="replytime != null">
+        replyTime,
+      </if>
+      <if test="commentcontent != null">
+        commentContent,
+      </if>
+      <if test="landlordreply != null">
+        landlordReply,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="commentid != null">
+        #{commentid,jdbcType=INTEGER},
+      </if>
+      <if test="houseid != null">
+        #{houseid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="landlordid != null">
+        #{landlordid,jdbcType=INTEGER},
+      </if>
+      <if test="hasimage != null">
+        #{hasimage,jdbcType=BIT},
+      </if>
+      <if test="cleanliness != null">
+        #{cleanliness,jdbcType=DOUBLE},
+      </if>
+      <if test="accuracy != null">
+        #{accuracy,jdbcType=DOUBLE},
+      </if>
+      <if test="locationtransport != null">
+        #{locationtransport,jdbcType=DOUBLE},
+      </if>
+      <if test="safety != null">
+        #{safety,jdbcType=DOUBLE},
+      </if>
+      <if test="valueformmoney != null">
+        #{valueformmoney,jdbcType=DOUBLE},
+      </if>
+      <if test="rating != null">
+        #{rating,jdbcType=DOUBLE},
+      </if>
+      <if test="commenttime != null">
+        #{commenttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="replytime != null">
+        #{replytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commentcontent != null">
+        #{commentcontent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="landlordreply != null">
+        #{landlordreply,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hall.Bean.CommentsExample" resultType="java.lang.Long">
+    select count(*) from comments
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update comments
+    <set>
+      <if test="record.commentid != null">
+        commentId = #{record.commentid,jdbcType=INTEGER},
+      </if>
+      <if test="record.houseid != null">
+        houseId = #{record.houseid,jdbcType=INTEGER},
+      </if>
+      <if test="record.userid != null">
+        userId = #{record.userid,jdbcType=INTEGER},
+      </if>
+      <if test="record.username != null">
+        username = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.landlordid != null">
+        landlordId = #{record.landlordid,jdbcType=INTEGER},
+      </if>
+      <if test="record.hasimage != null">
+        hasImage = #{record.hasimage,jdbcType=BIT},
+      </if>
+      <if test="record.cleanliness != null">
+        cleanliness = #{record.cleanliness,jdbcType=DOUBLE},
+      </if>
+      <if test="record.accuracy != null">
+        accuracy = #{record.accuracy,jdbcType=DOUBLE},
+      </if>
+      <if test="record.locationtransport != null">
+        locationTransport = #{record.locationtransport,jdbcType=DOUBLE},
+      </if>
+      <if test="record.safety != null">
+        safety = #{record.safety,jdbcType=DOUBLE},
+      </if>
+      <if test="record.valueformmoney != null">
+        valueForMmoney = #{record.valueformmoney,jdbcType=DOUBLE},
+      </if>
+      <if test="record.rating != null">
+        rating = #{record.rating,jdbcType=DOUBLE},
+      </if>
+      <if test="record.commenttime != null">
+        commentTime = #{record.commenttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.replytime != null">
+        replyTime = #{record.replytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.commentcontent != null">
+        commentContent = #{record.commentcontent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.landlordreply != null">
+        landlordReply = #{record.landlordreply,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update comments
+    set commentId = #{record.commentid,jdbcType=INTEGER},
+      houseId = #{record.houseid,jdbcType=INTEGER},
+      userId = #{record.userid,jdbcType=INTEGER},
+      username = #{record.username,jdbcType=VARCHAR},
+      landlordId = #{record.landlordid,jdbcType=INTEGER},
+      hasImage = #{record.hasimage,jdbcType=BIT},
+      cleanliness = #{record.cleanliness,jdbcType=DOUBLE},
+      accuracy = #{record.accuracy,jdbcType=DOUBLE},
+      locationTransport = #{record.locationtransport,jdbcType=DOUBLE},
+      safety = #{record.safety,jdbcType=DOUBLE},
+      valueForMmoney = #{record.valueformmoney,jdbcType=DOUBLE},
+      rating = #{record.rating,jdbcType=DOUBLE},
+      commentTime = #{record.commenttime,jdbcType=TIMESTAMP},
+      replyTime = #{record.replytime,jdbcType=TIMESTAMP},
+      commentContent = #{record.commentcontent,jdbcType=LONGVARCHAR},
+      landlordReply = #{record.landlordreply,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update comments
+    set commentId = #{record.commentid,jdbcType=INTEGER},
+      houseId = #{record.houseid,jdbcType=INTEGER},
+      userId = #{record.userid,jdbcType=INTEGER},
+      username = #{record.username,jdbcType=VARCHAR},
+      landlordId = #{record.landlordid,jdbcType=INTEGER},
+      hasImage = #{record.hasimage,jdbcType=BIT},
+      cleanliness = #{record.cleanliness,jdbcType=DOUBLE},
+      accuracy = #{record.accuracy,jdbcType=DOUBLE},
+      locationTransport = #{record.locationtransport,jdbcType=DOUBLE},
+      safety = #{record.safety,jdbcType=DOUBLE},
+      valueForMmoney = #{record.valueformmoney,jdbcType=DOUBLE},
+      rating = #{record.rating,jdbcType=DOUBLE},
+      commentTime = #{record.commenttime,jdbcType=TIMESTAMP},
+      replyTime = #{record.replytime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hall.Bean.CommentsWithBLOBs">
+    update comments
+    <set>
+      <if test="houseid != null">
+        houseId = #{houseid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="landlordid != null">
+        landlordId = #{landlordid,jdbcType=INTEGER},
+      </if>
+      <if test="hasimage != null">
+        hasImage = #{hasimage,jdbcType=BIT},
+      </if>
+      <if test="cleanliness != null">
+        cleanliness = #{cleanliness,jdbcType=DOUBLE},
+      </if>
+      <if test="accuracy != null">
+        accuracy = #{accuracy,jdbcType=DOUBLE},
+      </if>
+      <if test="locationtransport != null">
+        locationTransport = #{locationtransport,jdbcType=DOUBLE},
+      </if>
+      <if test="safety != null">
+        safety = #{safety,jdbcType=DOUBLE},
+      </if>
+      <if test="valueformmoney != null">
+        valueForMmoney = #{valueformmoney,jdbcType=DOUBLE},
+      </if>
+      <if test="rating != null">
+        rating = #{rating,jdbcType=DOUBLE},
+      </if>
+      <if test="commenttime != null">
+        commentTime = #{commenttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="replytime != null">
+        replyTime = #{replytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commentcontent != null">
+        commentContent = #{commentcontent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="landlordreply != null">
+        landlordReply = #{landlordreply,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where commentId = #{commentid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.hall.Bean.CommentsWithBLOBs">
+    update comments
+    set houseId = #{houseid,jdbcType=INTEGER},
+      userId = #{userid,jdbcType=INTEGER},
+      username = #{username,jdbcType=VARCHAR},
+      landlordId = #{landlordid,jdbcType=INTEGER},
+      hasImage = #{hasimage,jdbcType=BIT},
+      cleanliness = #{cleanliness,jdbcType=DOUBLE},
+      accuracy = #{accuracy,jdbcType=DOUBLE},
+      locationTransport = #{locationtransport,jdbcType=DOUBLE},
+      safety = #{safety,jdbcType=DOUBLE},
+      valueForMmoney = #{valueformmoney,jdbcType=DOUBLE},
+      rating = #{rating,jdbcType=DOUBLE},
+      commentTime = #{commenttime,jdbcType=TIMESTAMP},
+      replyTime = #{replytime,jdbcType=TIMESTAMP},
+      commentContent = #{commentcontent,jdbcType=LONGVARCHAR},
+      landlordReply = #{landlordreply,jdbcType=LONGVARCHAR}
+    where commentId = #{commentid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hall.Bean.Comments">
+    update comments
+    set houseId = #{houseid,jdbcType=INTEGER},
+      userId = #{userid,jdbcType=INTEGER},
+      username = #{username,jdbcType=VARCHAR},
+      landlordId = #{landlordid,jdbcType=INTEGER},
+      hasImage = #{hasimage,jdbcType=BIT},
+      cleanliness = #{cleanliness,jdbcType=DOUBLE},
+      accuracy = #{accuracy,jdbcType=DOUBLE},
+      locationTransport = #{locationtransport,jdbcType=DOUBLE},
+      safety = #{safety,jdbcType=DOUBLE},
+      valueForMmoney = #{valueformmoney,jdbcType=DOUBLE},
+      rating = #{rating,jdbcType=DOUBLE},
+      commentTime = #{commenttime,jdbcType=TIMESTAMP},
+      replyTime = #{replytime,jdbcType=TIMESTAMP}
+    where commentId = #{commentid,jdbcType=INTEGER}
+  </update>
+  <select id="selectLatestCommentByHouseid" parameterType="java.lang.Integer" resultType="com.hall.Bean.CommentsWithBLOBs">
+    SELECT *
+    FROM comments
+    WHERE houseId = #{houseid}
+    ORDER BY commentTime DESC
+      LIMIT 1;
+  </select>
+  <select id="selectCommentByHouseid" parameterType="java.lang.Integer" resultType="com.hall.Bean.CommentsWithBLOBs">
+    SELECT *
+    FROM comments
+    WHERE houseId = #{houseid}
+    ORDER BY commentTime DESC
+  </select>
+
+  <select id="selectImageCommentId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select commentId from comments where hasImage=1 and houseId=#{houseid}
+  </select>
+
+  <select id="queryNeedToReply" parameterType="java.lang.Integer" resultType="com.hall.Bean.CommentsWithBLOBs">
+    select * from comments where landlordId=#{id} and landlordReply is null
+  </select>
+
+<select id="selectRatings" parameterType="java.lang.Integer" resultType="java.lang.Double">
+  select rating from comments where houseId=#{hid}
+</select>
+  <select id="getAllCid" resultType="java.lang.Integer">
+    select commentId from comments
+  </select>
+</mapper>

@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hall.DAO.WithdrawalsMapper">
+  <resultMap id="BaseResultMap" type="com.hall.Bean.Withdrawals">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="withdrawalNumber" jdbcType="VARCHAR" property="withdrawalnumber" />
+    <result column="lid" jdbcType="INTEGER" property="lid" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="fee" jdbcType="DECIMAL" property="fee" />
+    <result column="actualAmount" jdbcType="DECIMAL" property="actualamount" />
+    <result column="initiationTime" jdbcType="TIMESTAMP" property="initiationtime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, withdrawalNumber, lid, amount, fee, actualAmount, initiationTime
+  </sql>
+  <select id="selectByExample" parameterType="com.hall.Bean.WithdrawalsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from withdrawals
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from withdrawals
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from withdrawals
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hall.Bean.WithdrawalsExample">
+    delete from withdrawals
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hall.Bean.Withdrawals">
+    insert into withdrawals (id, withdrawalNumber, lid, 
+      amount, fee, actualAmount, 
+      initiationTime)
+    values (#{id,jdbcType=INTEGER}, #{withdrawalnumber,jdbcType=VARCHAR}, #{lid,jdbcType=INTEGER}, 
+      #{amount,jdbcType=DECIMAL}, #{fee,jdbcType=DECIMAL}, #{actualamount,jdbcType=DECIMAL}, 
+      #{initiationtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hall.Bean.Withdrawals">
+    insert into withdrawals
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="withdrawalnumber != null">
+        withdrawalNumber,
+      </if>
+      <if test="lid != null">
+        lid,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="fee != null">
+        fee,
+      </if>
+      <if test="actualamount != null">
+        actualAmount,
+      </if>
+      <if test="initiationtime != null">
+        initiationTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="withdrawalnumber != null">
+        #{withdrawalnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="lid != null">
+        #{lid,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="fee != null">
+        #{fee,jdbcType=DECIMAL},
+      </if>
+      <if test="actualamount != null">
+        #{actualamount,jdbcType=DECIMAL},
+      </if>
+      <if test="initiationtime != null">
+        #{initiationtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hall.Bean.WithdrawalsExample" resultType="java.lang.Long">
+    select count(*) from withdrawals
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update withdrawals
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.withdrawalnumber != null">
+        withdrawalNumber = #{record.withdrawalnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lid != null">
+        lid = #{record.lid,jdbcType=INTEGER},
+      </if>
+      <if test="record.amount != null">
+        amount = #{record.amount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.fee != null">
+        fee = #{record.fee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.actualamount != null">
+        actualAmount = #{record.actualamount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.initiationtime != null">
+        initiationTime = #{record.initiationtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update withdrawals
+    set id = #{record.id,jdbcType=INTEGER},
+      withdrawalNumber = #{record.withdrawalnumber,jdbcType=VARCHAR},
+      lid = #{record.lid,jdbcType=INTEGER},
+      amount = #{record.amount,jdbcType=DECIMAL},
+      fee = #{record.fee,jdbcType=DECIMAL},
+      actualAmount = #{record.actualamount,jdbcType=DECIMAL},
+      initiationTime = #{record.initiationtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hall.Bean.Withdrawals">
+    update withdrawals
+    <set>
+      <if test="withdrawalnumber != null">
+        withdrawalNumber = #{withdrawalnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="lid != null">
+        lid = #{lid,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="fee != null">
+        fee = #{fee,jdbcType=DECIMAL},
+      </if>
+      <if test="actualamount != null">
+        actualAmount = #{actualamount,jdbcType=DECIMAL},
+      </if>
+      <if test="initiationtime != null">
+        initiationTime = #{initiationtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hall.Bean.Withdrawals">
+    update withdrawals
+    set withdrawalNumber = #{withdrawalnumber,jdbcType=VARCHAR},
+      lid = #{lid,jdbcType=INTEGER},
+      amount = #{amount,jdbcType=DECIMAL},
+      fee = #{fee,jdbcType=DECIMAL},
+      actualAmount = #{actualamount,jdbcType=DECIMAL},
+      initiationTime = #{initiationtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

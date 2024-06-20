@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hall.DAO.PoliciesMapper">
+  <resultMap id="BaseResultMap" type="com.hall.Bean.Policies">
+    <id column="policyId" jdbcType="INTEGER" property="policyid" />
+    <result column="houseId" jdbcType="INTEGER" property="houseid" />
+    <result column="cancelPolicy" jdbcType="CHAR" property="cancelpolicy" />
+    <result column="allowAddGuests" jdbcType="DOUBLE" property="allowaddguests" />
+    <result column="deposit" jdbcType="DOUBLE" property="deposit" />
+    <result column="needToKnow" jdbcType="VARCHAR" property="needtoknow" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    policyId, houseId, cancelPolicy, allowAddGuests, deposit, needToKnow
+  </sql>
+  <select id="selectByExample" parameterType="com.hall.Bean.PoliciesExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from policies
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from policies
+    where policyId = #{policyid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from policies
+    where policyId = #{policyid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hall.Bean.PoliciesExample">
+    delete from policies
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hall.Bean.Policies">
+    insert into policies (policyId, houseId, cancelPolicy, 
+      allowAddGuests, deposit, needToKnow
+      )
+    values (#{policyid,jdbcType=INTEGER}, #{houseid,jdbcType=INTEGER}, #{cancelpolicy,jdbcType=CHAR}, 
+      #{allowaddguests,jdbcType=DOUBLE}, #{deposit,jdbcType=DOUBLE}, #{needtoknow,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hall.Bean.Policies">
+    insert into policies
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="policyid != null">
+        policyId,
+      </if>
+      <if test="houseid != null">
+        houseId,
+      </if>
+      <if test="cancelpolicy != null">
+        cancelPolicy,
+      </if>
+      <if test="allowaddguests != null">
+        allowAddGuests,
+      </if>
+      <if test="deposit != null">
+        deposit,
+      </if>
+      <if test="needtoknow != null">
+        needToKnow,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="policyid != null">
+        #{policyid,jdbcType=INTEGER},
+      </if>
+      <if test="houseid != null">
+        #{houseid,jdbcType=INTEGER},
+      </if>
+      <if test="cancelpolicy != null">
+        #{cancelpolicy,jdbcType=CHAR},
+      </if>
+      <if test="allowaddguests != null">
+        #{allowaddguests,jdbcType=DOUBLE},
+      </if>
+      <if test="deposit != null">
+        #{deposit,jdbcType=DOUBLE},
+      </if>
+      <if test="needtoknow != null">
+        #{needtoknow,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hall.Bean.PoliciesExample" resultType="java.lang.Long">
+    select count(*) from policies
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update policies
+    <set>
+      <if test="record.policyid != null">
+        policyId = #{record.policyid,jdbcType=INTEGER},
+      </if>
+      <if test="record.houseid != null">
+        houseId = #{record.houseid,jdbcType=INTEGER},
+      </if>
+      <if test="record.cancelpolicy != null">
+        cancelPolicy = #{record.cancelpolicy,jdbcType=CHAR},
+      </if>
+      <if test="record.allowaddguests != null">
+        allowAddGuests = #{record.allowaddguests,jdbcType=DOUBLE},
+      </if>
+      <if test="record.deposit != null">
+        deposit = #{record.deposit,jdbcType=DOUBLE},
+      </if>
+      <if test="record.needtoknow != null">
+        needToKnow = #{record.needtoknow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update policies
+    set policyId = #{record.policyid,jdbcType=INTEGER},
+      houseId = #{record.houseid,jdbcType=INTEGER},
+      cancelPolicy = #{record.cancelpolicy,jdbcType=CHAR},
+      allowAddGuests = #{record.allowaddguests,jdbcType=DOUBLE},
+      deposit = #{record.deposit,jdbcType=DOUBLE},
+      needToKnow = #{record.needtoknow,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hall.Bean.Policies">
+    update policies
+    <set>
+      <if test="houseid != null">
+        houseId = #{houseid,jdbcType=INTEGER},
+      </if>
+      <if test="cancelpolicy != null">
+        cancelPolicy = #{cancelpolicy,jdbcType=CHAR},
+      </if>
+      <if test="allowaddguests != null">
+        allowAddGuests = #{allowaddguests,jdbcType=DOUBLE},
+      </if>
+      <if test="deposit != null">
+        deposit = #{deposit,jdbcType=DOUBLE},
+      </if>
+      <if test="needtoknow != null">
+        needToKnow = #{needtoknow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where policyId = #{policyid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hall.Bean.Policies">
+    update policies
+    set houseId = #{houseid,jdbcType=INTEGER},
+      cancelPolicy = #{cancelpolicy,jdbcType=CHAR},
+      allowAddGuests = #{allowaddguests,jdbcType=DOUBLE},
+      deposit = #{deposit,jdbcType=DOUBLE},
+      needToKnow = #{needtoknow,jdbcType=VARCHAR}
+    where policyId = #{policyid,jdbcType=INTEGER}
+  </update>
+</mapper>
